@@ -1,4 +1,4 @@
-# Filename: hello-plotille
+# Filename: hello-plotille.py
 import plotille
 import math
 
