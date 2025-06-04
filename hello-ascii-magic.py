@@ -4,7 +4,9 @@
 # pip install ascii_magic
 
 from ascii_magic import AsciiArt
-import requests # URLからの画像取得時のエラーハンドリングのため
+import requests  # URLからの画像取得時のエラーハンドリングのため
+from io import BytesIO
+from PIL import Image
 
 def draw_star_spangled_banner_ascii(columns=120, char=None):
     """
@@ -22,9 +24,13 @@ def draw_star_spangled_banner_ascii(columns=120, char=None):
     print(f"画像URL: {image_url}")
 
     try:
-        # URLからAsciiArtオブジェクトを生成
-        # timeoutを設定して、長時間応答がない場合に備えます
-        my_art = AsciiArt.from_url(image_url, timeout=10)
+        # 画像を取得して Pillow イメージとして読み込む
+        # requests の timeout を利用して、長時間応答がない場合に備える
+        resp = requests.get(image_url, timeout=10)
+        resp.raise_for_status()
+        img = Image.open(BytesIO(resp.content))
+        # 取得したイメージから AsciiArt オブジェクトを生成
+        my_art = AsciiArt.from_pillow_image(img)
     except requests.exceptions.RequestException as e:
         print(f"画像の取得に失敗しました: {e}")
         print("インターネット接続を確認するか、別の画像URLを試してください。")
