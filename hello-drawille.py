@@ -98,7 +98,7 @@ def draw_american_flag():
         current_star_col_x_px = x_spacing * (col_idx + 1)
 
         # この列の星の数を決定 (6個または5個)
-        is_col_of_6_stars = (col_idx % 2 == 0)  # 0, 2, 4, 6, 8 列目 (計5列が6個星)
+        is_col_of_6_stars = (col_idx % 2 == 0)  # 0, 2, 4, 6, 8 列目 (計5列が6個の星)
 
         if is_col_of_6_stars:
             num_stars_in_this_col = 6
